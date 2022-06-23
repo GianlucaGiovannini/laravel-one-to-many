@@ -9,6 +9,8 @@
         </div>
     </div>
 
+    @include('partials.session_message')
+
     <table class="table table-striped table-inverse table-responsive">
         <thead class="thead-inverse">
             <tr>

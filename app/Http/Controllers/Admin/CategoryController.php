@@ -17,10 +17,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::orderByDesc('id')->get();
+        return view('admin.categories.index', compact('categories'));
     }
-
-
 
 
     /**
@@ -31,11 +30,26 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd($request->all());
+
+        // validare
+        $val_data = $request->validate([
+            'name' => 'required|unique:categories'
+        ]);
+
+        // generare slug
+        $slug = Str::slug($request->name);
+        $val_data['slug'] = $slug;
+
+        // salvare
+        Category::create($val_data);
+
+        // indirizzare
+        return redirect()->back()->with('message', "category $slug aggiunta con successo");
     }
 
 
-    
+
 
     /**
      * Update the specified resource in storage.
@@ -46,7 +60,22 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        //dd($request->all());
+
+        // validare
+        $val_data = $request->validate([
+            'name' => ['required', Rule::unique('categories')->ignore($category)]
+        ]);
+
+        // generare slug
+        $slug = Str::slug($request->name);
+        $val_data['slug'] = $slug;
+
+        // salvare
+        $category->update($val_data);
+
+        // indirizzare
+        return redirect()->back()->with('message', "category $slug modificato con successo");
     }
 
     /**
@@ -57,6 +86,8 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+
+        return redirect()->back()->with('message', "$category->name eliminata con successo!");
     }
 }
