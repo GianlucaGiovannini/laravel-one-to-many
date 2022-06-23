@@ -18,6 +18,7 @@
         <div class="media me-3">
             <img class="shadow" width="150" src="{{$post->cover_image}}" alt="{{$post->title}}">
         </div>
+
         <div class="mb-4 w-100">
             <label for="cover_image">Cover Immagine</label>
             <input type="text" name="cover_image" id="cover_image" class="form-control  @error('cover_image') is-invalid @enderror" placeholder="Learn php article" aria-describedby="cover_imageHelper" value="{{old('cover_image', $post->cover_image)}}">
@@ -30,13 +31,21 @@
         <select class="form-control" name="category_id" id="category_id">
 
             <option value="">Select a category</option>
-            @foreach($categories as $category)
-            <!-- TODO
-            IF PER I POST CHE NON HANNO CATEGORIA
-            -->
-            <option value="{{$category->id}}" {{$category->id == old('category_id', $post->category->id) ? 'selected' : ''}} >{{$category->name}}</option>
+            @if($post->category_id == null)
 
+            @foreach($categories as $category)
+            
+            <option value="{{$category->id}}">{{$category->name}}</option>
+            
             @endforeach
+
+            @else 
+            @foreach($categories as $category)
+            
+            <option value="{{$category->id}}" {{$category->id == old('category_id', $post->category->id) ? 'selected' : ''}} >{{$category->name}}</option>
+            
+            @endforeach
+            @endif
 
         </select>
     </div>
