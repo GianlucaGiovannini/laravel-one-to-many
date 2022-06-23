@@ -77,6 +77,7 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
                 </td>
             </tr>
             @empty
