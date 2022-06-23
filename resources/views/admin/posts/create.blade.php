@@ -21,6 +21,17 @@
       <small id="cover_imageHelper" class="text-muted">Url image</small>
     </div>
 
+    <div class="mb-3">
+        <label for="category_id" class="form-label">Categories</label>
+        <select class="form-control @error('category_id') is-invalid @enderror" name="category_id" id="category_id">
+            <option value="">Select a category</option>
+            @foreach($categories as $category)
+            <!-- TODO:
+            Use old() function -->
+            <option value="{{$category->id}}">{{$category->name}}</option>
+            @endforeach
+        </select>
+    </div>
 
     <div class="mb-3">
       <label for="content" class="form-label">Content</label>

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Post;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequest;
-use Illuminate\Validation\Rule;
+use App\Models\Category;
 
 class PostController extends Controller
 {
@@ -28,7 +28,11 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');
+        $categories = Category::all();
+
+        //dd($categories);
+
+        return view('admin.posts.create', compact('categories'));
     }
 
     /**
@@ -41,14 +45,18 @@ class PostController extends Controller
     {
         //dd($request->all());
 
+        // Validate data
         $val_data = $request->validated();
+        // Gererate the slug
 
         $slug = Post::generateSlug($request->title);
+        // $slug = Str::slug($request->title, '-');
         //dd($slug);
-
         $val_data['slug'] = $slug;
 
+        // create the resource
         Post::create($val_data);
+        // redirect to a get route
         return redirect()->route('admin.posts.index')->with('message', 'Post creato con successo');
     }
 

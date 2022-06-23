@@ -24,6 +24,23 @@
             <small id="cover_imageHelper" class="text-muted">Indirizzo Url dell'immagine</small>
         </div>
     </div>
+
+    <div class="mb-4">
+        <label for="category_id" class="form-label @error('category_id') is-invalid @enderror">Categories</label>
+        <select class="form-control" name="category_id" id="category_id">
+
+            <option value="">Select a category</option>
+            @foreach($categories as $category)
+            <!-- TODO
+            IF PER I POST CHE NON HANNO CATEGORIA
+            -->
+            <option value="{{$category->id}}" {{$category->id == old('category_id', $post->category->id) ? 'selected' : ''}} >{{$category->name}}</option>
+
+            @endforeach
+
+        </select>
+    </div>
+
     <div class="mb-4">
         <label for="content">Content</label>
         <textarea class="form-control  @error('content') is-invalid @enderror" name="content" id="content" rows="4">

@@ -12,6 +12,11 @@
         <div class="col px-5 d-flex justify-content-center align-items-center">
             <div class="post-data pe-5">
                 <h1>{{$post->title}}</h1>
+
+                <div class="meta-data py-2">
+                    Category: {{$post->category ? $post->category->name : 'Uncategorized'}}
+                </div>
+                
                 <div class="content">
                     {{$post->content}}
                 </div>
